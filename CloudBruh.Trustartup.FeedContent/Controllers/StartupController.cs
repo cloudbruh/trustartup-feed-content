@@ -45,6 +45,7 @@ public class StartupController : ControllerBase
             return BadRequest();
         }
 
+        IUpdatable.OnUpdate(startup);
         _context.Entry(startup).State = EntityState.Modified;
 
         try
@@ -68,6 +69,7 @@ public class StartupController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<Startup>> PostStartup(Startup startup)
     {
+        IUpdatable.OnCreate(startup);
         _context.Startups.Add(startup);
         await _context.SaveChangesAsync();
 

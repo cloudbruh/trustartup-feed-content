@@ -1,6 +1,6 @@
 namespace CloudBruh.Trustartup.FeedContent.Models;
 
-public class Startup
+public class Startup : IUpdatable
 {
     public long Id { get; set; }
     public string? Name { get; set; }
@@ -9,4 +9,6 @@ public class Startup
     public DateTime EndingAt { get; set; }
     public decimal FundsGoal { get; set; }
     public double Rating { get; set; }
+    public DateTime UpdatedAt { get; set; }
+    public DateTime CreatedAt { get; set; }
 }
