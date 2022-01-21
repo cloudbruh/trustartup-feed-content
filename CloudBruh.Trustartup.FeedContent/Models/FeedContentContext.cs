@@ -33,12 +33,19 @@ public class FeedContentContext : DbContext
                 entity.CreatedAt = DateTime.UtcNow;
             }
         }
-        
-        foreach (EntityEntry entry in ChangeTracker.Entries().Where(entry => entry.State == EntityState.Modified))
+
+        foreach (EntityEntry entry in ChangeTracker.Entries()
+                     .Where(entry => entry.State is EntityState.Added or EntityState.Modified)) 
         {
-            if (entry.Entity is IUpdatable entity)
+            if (entry.Entity is not IUpdatable entity)
             {
-                entity.UpdatedAt = DateTime.UtcNow;
+                continue;
+            }
+
+            entity.UpdatedAt = DateTime.UtcNow;
+            if (entry.State == EntityState.Added)
+            {
+                entity.CreatedAt = entity.UpdatedAt;
             }
         }
     }
