@@ -11,6 +11,7 @@ public class FeedContentContext : DbContext
     }
 
     public DbSet<Startup> Startups { get; set; } = null!;
+    public DbSet<Post> Posts { get; set; } = null!;
 
     public override int SaveChanges(bool acceptAllChangesOnSuccess)
     {
