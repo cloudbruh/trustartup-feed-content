@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using CloudBruh.Trustartup.FeedContent.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -5,7 +6,8 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 builder.Services.AddDbContext<FeedContentContext>(options => options.UseInMemoryDatabase("FeedContent"));
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
