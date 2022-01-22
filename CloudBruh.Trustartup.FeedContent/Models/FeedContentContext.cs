@@ -14,6 +14,7 @@ public class FeedContentContext : DbContext
     public DbSet<Post> Posts { get; set; } = null!;
     public DbSet<Comment> Comments { get; set; } = null!;
     public DbSet<Like> Likes { get; set; } = null!;
+    public DbSet<MediaRelationship> MediaRelationships { get; set; } = null!;
 
     public override int SaveChanges(bool acceptAllChangesOnSuccess)
     {
