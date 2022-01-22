@@ -18,6 +18,13 @@ public class FeedContentContext : DbContext
     public DbSet<Follow> Follows { get; set; } = null!;
     public DbSet<Reward> Rewards { get; set; } = null!;
 
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Comment>()
+            .HasOne(comment => comment.Replied)
+            .WithMany(comment => comment.Replies);
+    }
+
     public override int SaveChanges(bool acceptAllChangesOnSuccess)
     {
         SetProperties();
