@@ -16,6 +16,7 @@ public class FeedContentContext : DbContext
     public DbSet<Like> Likes { get; set; } = null!;
     public DbSet<MediaRelationship> MediaRelationships { get; set; } = null!;
     public DbSet<Follow> Follows { get; set; } = null!;
+    public DbSet<Reward> Rewards { get; set; } = null!;
 
     public override int SaveChanges(bool acceptAllChangesOnSuccess)
     {
