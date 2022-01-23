@@ -17,6 +17,14 @@ builder.Services.AddSwaggerGen();
 
 WebApplication app = builder.Build();
 
+// Apply migrations on development environment.
+if (app.Environment.IsDevelopment())
+{
+    using IServiceScope scope = app.Services.CreateScope();
+    var db = scope.ServiceProvider.GetRequiredService<FeedContentContext>();
+    await db.Database.MigrateAsync();
+}
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
