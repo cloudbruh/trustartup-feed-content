@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace CloudBruh.Trustartup.FeedContent.Models;
 
@@ -35,43 +34,5 @@ public class FeedContentContext : DbContext
         modelBuilder.Entity<Post>().Property(post => post.UpdatedAt).HasDefaultValueSql("now()");
         modelBuilder.Entity<Comment>().Property(comment => comment.UpdatedAt).HasDefaultValueSql("now()");
         modelBuilder.Entity<Reward>().Property(reward => reward.UpdatedAt).HasDefaultValueSql("now()");
-    }
-
-    public override int SaveChanges(bool acceptAllChangesOnSuccess)
-    {
-        SetProperties();
-        return base.SaveChanges(acceptAllChangesOnSuccess);
-    }
-
-    public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = new())
-    {
-        SetProperties();
-        return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
-    }
-
-    private void SetProperties()
-    {
-        // foreach (EntityEntry entry in ChangeTracker.Entries().Where(entry => entry.State == EntityState.Added))
-        // {
-        //     if (entry.Entity is ICreatable entity)
-        //     {
-        //         entity.CreatedAt = DateTime.UtcNow;
-        //     }
-        // }
-        //
-        // foreach (EntityEntry entry in ChangeTracker.Entries()
-        //              .Where(entry => entry.State is EntityState.Added or EntityState.Modified)) 
-        // {
-        //     if (entry.Entity is not IUpdatable entity)
-        //     {
-        //         continue;
-        //     }
-        //
-        //     entity.UpdatedAt = DateTime.UtcNow;
-        //     if (entry.State == EntityState.Added)
-        //     {
-        //         entity.CreatedAt = entity.UpdatedAt;
-        //     }
-        // }
     }
 }
