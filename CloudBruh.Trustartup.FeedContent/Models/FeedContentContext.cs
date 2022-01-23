@@ -23,6 +23,18 @@ public class FeedContentContext : DbContext
         modelBuilder.Entity<Comment>()
             .HasOne(comment => comment.Replied)
             .WithMany(comment => comment.Replies);
+
+        modelBuilder.Entity<Startup>().Property(startup => startup.CreatedAt).HasDefaultValueSql("now()");
+        modelBuilder.Entity<Post>().Property(post => post.CreatedAt).HasDefaultValueSql("now()");
+        modelBuilder.Entity<Comment>().Property(comment => comment.CreatedAt).HasDefaultValueSql("now()");
+        modelBuilder.Entity<Like>().Property(like => like.CreatedAt).HasDefaultValueSql("now()");
+        modelBuilder.Entity<Follow>().Property(follow => follow.CreatedAt).HasDefaultValueSql("now()");
+        modelBuilder.Entity<Reward>().Property(reward => reward.CreatedAt).HasDefaultValueSql("now()");
+        
+        modelBuilder.Entity<Startup>().Property(startup => startup.UpdatedAt).HasDefaultValueSql("now()");
+        modelBuilder.Entity<Post>().Property(post => post.UpdatedAt).HasDefaultValueSql("now()");
+        modelBuilder.Entity<Comment>().Property(comment => comment.UpdatedAt).HasDefaultValueSql("now()");
+        modelBuilder.Entity<Reward>().Property(reward => reward.UpdatedAt).HasDefaultValueSql("now()");
     }
 
     public override int SaveChanges(bool acceptAllChangesOnSuccess)
@@ -39,27 +51,27 @@ public class FeedContentContext : DbContext
 
     private void SetProperties()
     {
-        foreach (EntityEntry entry in ChangeTracker.Entries().Where(entry => entry.State == EntityState.Added))
-        {
-            if (entry.Entity is ICreatable entity)
-            {
-                entity.CreatedAt = DateTime.UtcNow;
-            }
-        }
-
-        foreach (EntityEntry entry in ChangeTracker.Entries()
-                     .Where(entry => entry.State is EntityState.Added or EntityState.Modified)) 
-        {
-            if (entry.Entity is not IUpdatable entity)
-            {
-                continue;
-            }
-
-            entity.UpdatedAt = DateTime.UtcNow;
-            if (entry.State == EntityState.Added)
-            {
-                entity.CreatedAt = entity.UpdatedAt;
-            }
-        }
+        // foreach (EntityEntry entry in ChangeTracker.Entries().Where(entry => entry.State == EntityState.Added))
+        // {
+        //     if (entry.Entity is ICreatable entity)
+        //     {
+        //         entity.CreatedAt = DateTime.UtcNow;
+        //     }
+        // }
+        //
+        // foreach (EntityEntry entry in ChangeTracker.Entries()
+        //              .Where(entry => entry.State is EntityState.Added or EntityState.Modified)) 
+        // {
+        //     if (entry.Entity is not IUpdatable entity)
+        //     {
+        //         continue;
+        //     }
+        //
+        //     entity.UpdatedAt = DateTime.UtcNow;
+        //     if (entry.State == EntityState.Added)
+        //     {
+        //         entity.CreatedAt = entity.UpdatedAt;
+        //     }
+        // }
     }
 }

@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace CloudBruh.Trustartup.FeedContent.Models;
 
 public class Follow : ICreatable
@@ -6,5 +8,6 @@ public class Follow : ICreatable
     public long UserId { get; set; }
     public long StartupId { get; set; }
     public Startup Startup { get; set; } = null!;
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public DateTime CreatedAt { get; set; }
 }

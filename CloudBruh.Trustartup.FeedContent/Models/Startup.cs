@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace CloudBruh.Trustartup.FeedContent.Models;
 
 public class Startup : IUpdatable
@@ -15,6 +17,8 @@ public class Startup : IUpdatable
     public DateTime EndingAt { get; set; }
     public decimal FundsGoal { get; set; }
     public double Rating { get; set; }
+    [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
     public DateTime UpdatedAt { get; set; }
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public DateTime CreatedAt { get; set; }
 }

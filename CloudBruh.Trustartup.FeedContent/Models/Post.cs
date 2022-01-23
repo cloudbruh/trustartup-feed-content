@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace CloudBruh.Trustartup.FeedContent.Models;
 
 public class Post : IUpdatable
@@ -13,6 +15,8 @@ public class Post : IUpdatable
     public Startup Startup { get; set; } = null!;
     public string Header { get; set; }
     public string Text { get; set; }
+    [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
     public DateTime UpdatedAt { get; set; }
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public DateTime CreatedAt { get; set; }
 }

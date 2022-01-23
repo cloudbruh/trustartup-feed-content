@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace CloudBruh.Trustartup.FeedContent.Models;
 
 public class Reward : IUpdatable
@@ -15,6 +17,8 @@ public class Reward : IUpdatable
     public decimal DonationMinimum { get; set; }
     public long MediaId { get; set; }
     public string Description { get; set; }
+    [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
     public DateTime UpdatedAt { get; set; }
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public DateTime CreatedAt { get; set; }
 }
