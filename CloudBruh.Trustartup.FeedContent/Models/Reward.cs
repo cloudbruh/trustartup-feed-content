@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace CloudBruh.Trustartup.FeedContent.Models;
 
@@ -12,6 +13,7 @@ public class Reward : IUpdatable
 
     public long Id { get; set; }
     public long StartupId { get; set; }
+    [JsonIgnore]
     public Startup? Startup { get; set; }
     public string Name { get; set; }
     public decimal DonationMinimum { get; set; }
