@@ -12,7 +12,7 @@ public class Reward : IUpdatable
 
     public long Id { get; set; }
     public long StartupId { get; set; }
-    public Startup Startup { get; set; } = null!;
+    public Startup? Startup { get; set; }
     public string Name { get; set; }
     public decimal DonationMinimum { get; set; }
     public long MediaId { get; set; }

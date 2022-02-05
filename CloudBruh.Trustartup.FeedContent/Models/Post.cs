@@ -12,7 +12,7 @@ public class Post : IUpdatable
 
     public long Id { get; set; }
     public long StartupId { get; set; }
-    public Startup Startup { get; set; } = null!;
+    public Startup? Startup { get; set; }
     public string Header { get; set; }
     public string Text { get; set; }
     [DatabaseGenerated(DatabaseGeneratedOption.Computed)]

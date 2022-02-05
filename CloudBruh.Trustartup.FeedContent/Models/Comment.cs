@@ -20,5 +20,5 @@ public class Comment : IUpdatable
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public DateTime CreatedAt { get; set; }
 
-    public List<Comment> Replies { get; set; } = null!;
+    public List<Comment>? Replies { get; set; } = null!;
 }
