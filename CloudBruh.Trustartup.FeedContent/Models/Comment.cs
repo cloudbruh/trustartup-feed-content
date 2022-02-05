@@ -11,6 +11,7 @@ public class Comment : IUpdatable
     }
 
     public long Id { get; set; }
+    public long UserId { get; set; }
     public long CommentableId { get; set; }
     public CommentableType CommentableType { get; set; }
     public long? RepliedId { get; set; }
