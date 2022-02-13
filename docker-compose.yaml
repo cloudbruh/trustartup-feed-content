@@ -1,0 +1,12 @@
+services: 
+  feed-content:
+    build: .
+    environment: 
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__Database=host=feed-content-db;database=postgres;user id=postgres;password=postgres;
+    ports:
+      - "8081:80"
+  feed-content-db:
+    image: "postgres:14.1-alpine"
+    environment:
+      - POSTGRES_PASSWORD=postgres
