@@ -89,6 +89,41 @@ public class StartupController : ControllerBase
 
         return NoContent();
     }
+    
+    // PUT: api/Startup/5/rating
+    [HttpPut("{id:long}/rating")]
+    public async Task<ActionResult<Startup>> PostStartupRating(long id, StartupRatingDto startupRating)
+    {
+        if (id != startupRating.Id)
+        {
+            return BadRequest();
+        }
+        
+        Startup? startup = await _context.Startups.FindAsync(id);
+        if (startup == null)
+        {
+            return NotFound();
+        }
+
+        startup.Rating = startupRating.Rating;
+        _context.Entry(startup).State = EntityState.Modified;
+
+        try
+        {
+            await _context.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            if (!StartupExists(id))
+            {
+                return NotFound();
+            }
+
+            throw;
+        }
+
+        return NoContent();
+    }
 
     private bool StartupExists(long id)
     {
