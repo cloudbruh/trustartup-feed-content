@@ -17,9 +17,23 @@ public class StartupController : ControllerBase
 
     // GET: api/Startup
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Startup>>> GetStartups()
+    public async Task<ActionResult<IEnumerable<Startup>>> GetStartups(int count = 20, double? maxRating = null)
     {
-        return await _context.Startups.ToListAsync();
+        IQueryable<Startup> query = _context.Startups;
+
+        if (maxRating != null)
+        {
+            query = query.Where(startup => startup.Rating < maxRating);
+        }
+
+        query = query.OrderByDescending(startup => startup.Rating);
+
+        if (count >= 0)
+        {
+            query = query.Take(count);
+        }
+
+        return await query.ToListAsync();
     }
 
     // GET: api/Startup/5
