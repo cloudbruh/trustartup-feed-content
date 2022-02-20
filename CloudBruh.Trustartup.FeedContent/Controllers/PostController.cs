@@ -17,9 +17,14 @@ public class PostController : ControllerBase
 
     // GET: api/Post
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Post>>> GetPosts()
+    public async Task<ActionResult<IEnumerable<Post>>> GetPosts(long? startupId = null)
     {
-        return await _context.Posts.ToListAsync();
+        if (startupId == null)
+        {
+            return await _context.Posts.ToListAsync();
+        }
+        
+        return await _context.Posts.Where(post => post.StartupId == startupId).ToListAsync();
     }
 
     // GET: api/Post/5
