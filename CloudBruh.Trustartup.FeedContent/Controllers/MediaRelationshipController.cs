@@ -17,9 +17,21 @@ public class MediaRelationshipController : ControllerBase
 
     // GET: api/MediaRelationship
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<MediaRelationship>>> GetMediaRelationships()
+    public async Task<ActionResult<IEnumerable<MediaRelationship>>> GetMediaRelationships(MediableType? mediableType = null, long? mediableId = null)
     {
-        return await _context.MediaRelationships.ToListAsync();
+        if (mediableType == null && mediableId == null)
+        {
+            return await _context.MediaRelationships.ToListAsync();
+        }
+
+        if (mediableType == null || mediableId == null)
+        {
+            return BadRequest("MediableType and MediableId are needed both if any specified.");
+        }
+        
+        return await _context.MediaRelationships
+            .Where(relationship => relationship.MediableType == mediableType && relationship.MediableId == mediableId)
+            .ToListAsync();
     }
 
     // GET: api/MediaRelationship/5
