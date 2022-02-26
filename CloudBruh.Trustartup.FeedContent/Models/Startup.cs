@@ -17,6 +17,7 @@ public class Startup : IUpdatable
     public DateTime EndingAt { get; set; }
     public decimal FundsGoal { get; set; }
     public double Rating { get; set; }
+    public StartupStatus Status { get; set; }
     [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
     public DateTime UpdatedAt { get; set; }
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

@@ -3,6 +3,7 @@ using System;
 using CloudBruh.Trustartup.FeedContent.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CloudBruh.Trustartup.FeedContent.Migrations
 {
     [DbContext(typeof(FeedContentContext))]
-    partial class FeedContentContextModelSnapshot : ModelSnapshot
+    [Migration("20220226130430_StartupStatus")]
+    partial class StartupStatus
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
