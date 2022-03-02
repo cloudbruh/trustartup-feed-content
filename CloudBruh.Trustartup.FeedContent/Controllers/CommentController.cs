@@ -17,9 +17,21 @@ public class CommentController : ControllerBase
 
     // GET: api/Comment
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Comment>>> GetComments()
+    public async Task<ActionResult<IEnumerable<Comment>>> GetComments(CommentableType? commentableType = null, long? commentableId = null)
     {
-        return await _context.Comments.ToListAsync();
+        if (commentableType == null && commentableId == null)
+        {
+            return await _context.Comments.ToListAsync();
+        }
+
+        if (commentableType == null || commentableId == null)
+        {
+            return BadRequest("CommentableType and CommentableId are needed both if any specified.");
+        }
+        
+        return await _context.Comments
+            .Where(comment => comment.CommentableType == commentableType && comment.CommentableId == commentableId)
+            .ToListAsync();
     }
 
     // GET: api/Comment/5
