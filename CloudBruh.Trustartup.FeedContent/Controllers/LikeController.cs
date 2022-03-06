@@ -41,6 +41,16 @@ public class LikeController : ControllerBase
         return await _context.Likes
             .LongCountAsync(like => like.LikeableType == likeableType && like.LikeableId == likeableId);
     }
+    
+    // GET: api/Follow/check
+    [HttpGet("check")]
+    public async Task<ActionResult<bool>> GetLiked(LikeableType likeableType, long likeableId, long userId)
+    {
+        return await _context.Likes
+                   .FirstOrDefaultAsync(like =>
+                       like.LikeableType == likeableType && like.LikeableId == likeableId && like.UserId == userId) 
+               != null;
+    }
 
     // GET: api/Like/5
     [HttpGet("{id:long}")]

@@ -37,6 +37,15 @@ public class FollowController : ControllerBase
             .LongCountAsync(follow => follow.StartupId == startupId);
     }
 
+    // GET: api/Follow/check
+    [HttpGet("check")]
+    public async Task<ActionResult<bool>> GetFollowed(long startupId, long userId)
+    {
+        return await _context.Follows
+            .FirstOrDefaultAsync(follow => follow.StartupId == startupId && follow.UserId == userId)
+               != null;
+    }
+
     // GET: api/Follow/5
     [HttpGet("{id:long}")]
     public async Task<ActionResult<Follow>> GetFollow(long id)
