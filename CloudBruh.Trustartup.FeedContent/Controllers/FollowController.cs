@@ -17,9 +17,24 @@ public class FollowController : ControllerBase
 
     // GET: api/Follow
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Follow>>> GetFollows()
+    public async Task<ActionResult<IEnumerable<Follow>>> GetFollows(long? startupId = null)
     {
-        return await _context.Follows.ToListAsync();
+        if (startupId == null)
+        {
+            return await _context.Follows.ToListAsync();
+        }
+        
+        return await _context.Follows
+            .Where(follow => follow.StartupId == startupId)
+            .ToListAsync();
+    }
+
+    // GET: api/Follow/count
+    [HttpGet("count")]
+    public async Task<ActionResult<long>> GetFollowCount(long startupId)
+    {
+        return await _context.Follows
+            .LongCountAsync(follow => follow.StartupId == startupId);
     }
 
     // GET: api/Follow/5

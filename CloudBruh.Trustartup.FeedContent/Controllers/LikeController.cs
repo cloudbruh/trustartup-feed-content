@@ -17,9 +17,29 @@ public class LikeController : ControllerBase
 
     // GET: api/Like
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Like>>> GetLikes()
+    public async Task<ActionResult<IEnumerable<Like>>> GetLikes(LikeableType? likeableType = null, long? likeableId = null)
     {
-        return await _context.Likes.ToListAsync();
+        if (likeableType == null && likeableId == null)
+        {
+            return await _context.Likes.ToListAsync();
+        }
+
+        if (likeableType == null || likeableId == null)
+        {
+            return BadRequest("LikeableType and LikeableId are needed both if any specified.");
+        }
+        
+        return await _context.Likes
+            .Where(like => like.LikeableType == likeableType && like.LikeableId == likeableId)
+            .ToListAsync();
+    }
+    
+    // GET: api/Like/count
+    [HttpGet("count")]
+    public async Task<ActionResult<long>> GetLikeCount(LikeableType likeableType, long likeableId)
+    {
+        return await _context.Likes
+            .LongCountAsync(like => like.LikeableType == likeableType && like.LikeableId == likeableId);
     }
 
     // GET: api/Like/5

@@ -1,8 +1,10 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
+using Microsoft.EntityFrameworkCore;
 
 namespace CloudBruh.Trustartup.FeedContent.Models;
 
+[Index(nameof(UserId), nameof(StartupId), IsUnique = true)]
 public class Follow : ICreatable
 {
     public long Id { get; set; }
