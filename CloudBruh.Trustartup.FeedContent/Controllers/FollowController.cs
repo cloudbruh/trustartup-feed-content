@@ -85,4 +85,22 @@ public class FollowController : ControllerBase
 
         return NoContent();
     }
+    
+    // DELETE: api/Follow
+    [HttpDelete]
+    public async Task<IActionResult> DeleteFollow(long startupId, long userId)
+    {
+        Follow? follow = await _context.Follows
+            .FirstOrDefaultAsync(follow => follow.StartupId == startupId && follow.UserId == userId);
+        
+        if (follow == null)
+        {
+            return NotFound();
+        }
+
+        _context.Follows.Remove(follow);
+        await _context.SaveChangesAsync();
+
+        return NoContent();
+    }
 }

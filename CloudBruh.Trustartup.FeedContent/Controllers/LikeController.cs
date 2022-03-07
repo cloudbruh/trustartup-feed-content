@@ -91,4 +91,23 @@ public class LikeController : ControllerBase
 
         return NoContent();
     }
+    
+    // DELETE: api/Like
+    [HttpDelete]
+    public async Task<IActionResult> DeleteLike(LikeableType likeableType, long likeableId, long userId)
+    {
+        Like? like = await _context.Likes
+            .FirstOrDefaultAsync(like =>
+                like.LikeableType == likeableType && like.LikeableId == likeableId && like.UserId == userId);
+        
+        if (like == null)
+        {
+            return NotFound();
+        }
+
+        _context.Likes.Remove(like);
+        await _context.SaveChangesAsync();
+
+        return NoContent();
+    }
 }
