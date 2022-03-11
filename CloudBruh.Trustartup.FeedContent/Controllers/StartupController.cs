@@ -17,7 +17,8 @@ public class StartupController : ControllerBase
 
     // GET: api/Startup
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Startup>>> GetStartups(int count = 20, double? maxRating = null, long? userId = null)
+    public async Task<ActionResult<IEnumerable<Startup>>> GetStartups(
+        int offset = 0, int count = 20, double? maxRating = null, long? userId = null)
     {
         IQueryable<Startup> query = _context.Startups;
 
@@ -31,7 +32,9 @@ public class StartupController : ControllerBase
             query = query.Where(startup => startup.UserId == userId);
         }
 
-        query = query.OrderByDescending(startup => startup.Rating);
+        query = query
+            .OrderByDescending(startup => startup.Rating)
+            .Skip(offset);
 
         if (count >= 0)
         {
