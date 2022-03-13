@@ -17,9 +17,16 @@ public class RewardController : ControllerBase
 
     // GET: api/Reward
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Reward>>> GetRewards()
+    public async Task<ActionResult<IEnumerable<Reward>>> GetRewards(long? startupId = null)
     {
-        return await _context.Rewards.ToListAsync();
+        if (startupId == null)
+        {
+            return await _context.Rewards.ToListAsync();
+        }
+        
+        return await _context.Rewards
+            .Where(reward => reward.StartupId == startupId)
+            .ToListAsync();
     }
 
     // GET: api/Reward/5
