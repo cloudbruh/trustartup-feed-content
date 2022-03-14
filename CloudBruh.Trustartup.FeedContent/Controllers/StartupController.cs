@@ -18,7 +18,7 @@ public class StartupController : ControllerBase
     // GET: api/Startup
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Startup>>> GetStartups(
-        int offset = 0, int count = 20, double? maxRating = null, long? userId = null)
+        int offset = 0, int count = 20, double? maxRating = null, bool filterPublished = false, long? userId = null)
     {
         IQueryable<Startup> query = _context.Startups;
 
@@ -30,6 +30,11 @@ public class StartupController : ControllerBase
         if (userId != null)
         {
             query = query.Where(startup => startup.UserId == userId);
+        }
+
+        if (filterPublished)
+        {
+            query = query.Where(startup => startup.Status == StartupStatus.Published);
         }
 
         query = query
